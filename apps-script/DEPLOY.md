@@ -71,7 +71,9 @@ En la hoja **`Personas`**, completá una fila por cada persona. Solo las tres pr
 - **Rol** casi siempre va vacío. Poné `Traspaso` a quien deja el puesto (le suma el bloque de traspaso de tareas) y
   `Gerencia` al gerente (le suma el bloque de gerencia).
 - La primera fila ya viene cargada con tu cuenta y el rol `Prueba`: es para que pruebes la app. Quien tiene rol
-  `Prueba` ve todos los bloques y **no aparece** en las listas del equipo.
+  `Prueba` ve todos los bloques, **no aparece** en las listas del equipo y **recibe el mail de aviso** de cada envío.
+  Es el rol para Dirección: si querés que alguien más pueda mirar el formulario y enterarse de los envíos, cargalo así.
+  Para que además vea las respuestas, compartile la planilla.
 - Las columnas `Estado`, `Tareas cargadas`, `Última actividad` y `Enviado el` las completa la app.
 
 Cuando termines, volvé al editor, elegí la función **`verificarInstalacion`** y tocá **Ejecutar**.

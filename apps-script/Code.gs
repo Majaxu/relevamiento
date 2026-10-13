@@ -31,7 +31,7 @@ const FAVICON_URL = 'https://majaxu.github.io/relevamiento/favicon-32.png';
 /** Personas de Dirección que aparecen como opción en "quién te da tareas". */
 const DIRECCION = ['Tomás', 'Máximo'];
 
-/** Si es true, cada envío le manda un mail de aviso a quien publicó la app. */
+/** Si es true, cada envío manda un mail de aviso a quien publicó la app y a quienes tienen rol Prueba. */
 const AVISAR_POR_MAIL = true;
 
 /** Nombres de las hojas de la planilla. */
@@ -42,7 +42,8 @@ const H = { PERSONAS: 'Personas', TAREAS: 'Tareas', RESPUESTAS: 'Respuestas', BO
  *  - vacío: formulario normal.
  *  - Traspaso: suma el bloque de traspaso de tareas.
  *  - Gerencia: suma el bloque de gerencia.
- *  - Prueba: ve todo, para probar la app. No aparece en las listas del equipo.
+ *  - Prueba: ve todo, para probar la app. No aparece en las listas del equipo
+ *    y recibe el mail de aviso de cada envío. Es el rol para Dirección.
  */
 const ROLES = { TRASPASO: 'Traspaso', GERENCIA: 'Gerencia', PRUEBA: 'Prueba' };
 
@@ -455,7 +456,12 @@ function leerBorrador_(email) {
 function avisar_(persona, email, cantidad) {
   if (!AVISAR_POR_MAIL) return;
   try {
-    const para = Session.getEffectiveUser().getEmail();
+    // Le llega a quien publicó la app y a todos los que tienen rol Prueba en la hoja Personas.
+    const destinos = [String(Session.getEffectiveUser().getEmail() || '').toLowerCase()];
+    personas_().forEach(function (p) {
+      if (p.rol === ROLES.PRUEBA && p.email && destinos.indexOf(p.email) === -1) destinos.push(p.email);
+    });
+    const para = destinos.filter(function (x) { return x; }).join(',');
     if (!para) return;
     MailApp.sendEmail(para,
       'Relevamiento: ' + persona + ' envió sus respuestas',
