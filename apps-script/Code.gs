@@ -484,11 +484,22 @@ function instalar() {
     return sh;
   };
   const shP = armar(H.PERSONAS, COL_PERSONAS);
-  armar(H.TAREAS, COL_TAREAS);
-  armar(H.RESPUESTAS, ['Enviado el', 'Email', 'Persona'].concat(columnasRespuestas_().map(function (c) { return c.titulo; })));
+  const shT = armar(H.TAREAS, COL_TAREAS);
+  const shR = armar(H.RESPUESTAS, ['Enviado el', 'Email', 'Persona'].concat(columnasRespuestas_().map(function (c) { return c.titulo; })));
   const partes = [];
   for (let i = 1; i <= PARTES; i++) partes.push('Parte ' + i);
-  armar(H.BORRADORES, ['Email', 'Persona', 'Actualizado'].concat(partes));
+  const shB = armar(H.BORRADORES, ['Email', 'Persona', 'Actualizado'].concat(partes));
+
+  // Fechas a la argentina y con hora (día/mes/año, 24 horas).
+  try {
+    ss.setSpreadsheetLocale('es_AR');
+    ss.setSpreadsheetTimeZone(tz_());
+    const fechaHora = 'dd/MM/yyyy HH:mm';
+    shP.getRange('F2:G').setNumberFormat(fechaHora);
+    shT.getRange('A2:A').setNumberFormat(fechaHora);
+    shR.getRange('A2:A').setNumberFormat(fechaHora);
+    shB.getRange('C2:C').setNumberFormat(fechaHora);
+  } catch (e) {}
 
   // La hoja vacía que Google crea por defecto se saca.
   ss.getSheets().forEach(function (sh) {
