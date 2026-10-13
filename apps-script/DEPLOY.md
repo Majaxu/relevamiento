@@ -65,15 +65,15 @@ En la hoja **`Personas`**, completá una fila por cada persona. Solo las tres pr
 
 | Email | Nombre | Rol |
 |---|---|---|
-| el mail de Google de la persona | como querés que figure (Milton, Pao, …) | vacío, `Traspaso`, `Gerencia` o `Prueba` |
+| el mail de Google de la persona | como querés que figure (Milton, Pao, …) | vacío o `Prueba` |
 
 - **Nombre** es el que ven los demás en las opciones ("¿Quién te da tareas?", "Si faltás, ¿quién la hace?").
-- **Rol** casi siempre va vacío. Poné `Traspaso` a quien deja el puesto (le suma el bloque de traspaso de tareas) y
-  `Gerencia` al gerente (le suma el bloque de gerencia).
+- **Rol** va vacío para todo el equipo: todos contestan las mismas preguntas.
 - La primera fila ya viene cargada con tu cuenta y el rol `Prueba`: es para que pruebes la app. Quien tiene rol
-  `Prueba` ve todos los bloques, **no aparece** en las listas del equipo y **recibe el mail de aviso** de cada envío.
-  Es el rol para Dirección: si querés que alguien más pueda mirar el formulario y enterarse de los envíos, cargalo así.
-  Para que además vea las respuestas, compartile la planilla.
+  `Prueba` **no aparece** en las listas del equipo y **recibe el mail de aviso** de cada envío. Sus envíos quedan
+  marcados como PRUEBA. Es el rol para Dirección: si querés que alguien más pueda mirar el formulario y enterarse
+  de los envíos, cargalo así. Para que además vea las respuestas, compartile la planilla.
+- **Nadie más recibe mails**: el aviso de cada envío le llega solo a quien publicó la app y a quienes tienen rol `Prueba`.
 - Las columnas `Estado`, `Tareas cargadas`, `Última actividad` y `Enviado el` las completa la app.
 
 Cuando termines, volvé al editor, elegí la función **`verificarInstalacion`** y tocá **Ejecutar**.
@@ -163,6 +163,8 @@ la conexión se sincroniza solo. Si cierra y vuelve a entrar desde el mismo nave
 
 **¿Pueden ver las respuestas de los demás?**
 No. Cada uno ve solo lo suyo. La planilla está en tu Drive y no se comparte con nadie salvo que la compartas vos.
+Ojo con las casillas que usa más de una persona (por ejemplo, una de sector): quien entre con esa cuenta ve y
+puede cambiar el borrador de esa casilla.
 
 **Quiero cambiar una pregunta o un ejemplo.**
 Están todos en `Code.gs`, en la sección "CONTENIDO DEL CUESTIONARIO". Después de cambiar, publicá una versión nueva

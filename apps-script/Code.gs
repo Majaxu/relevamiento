@@ -15,6 +15,8 @@
  * email real de Google (Session.getActiveUser()). La pantalla nunca manda un
  * nombre: solo manda respuestas.
  *
+ * Todos contestan las mismas preguntas.
+ *
  * Las personas habilitadas NO están en este archivo: se cargan en la hoja
  * "Personas" de la planilla (email, nombre y rol).
  */
@@ -39,13 +41,12 @@ const H = { PERSONAS: 'Personas', TAREAS: 'Tareas', RESPUESTAS: 'Respuestas', BO
 
 /**
  * Roles (columna "Rol" de la hoja Personas).
- *  - vacío: formulario normal.
- *  - Traspaso: suma el bloque de traspaso de tareas.
- *  - Gerencia: suma el bloque de gerencia.
- *  - Prueba: ve todo, para probar la app. No aparece en las listas del equipo
- *    y recibe el mail de aviso de cada envío. Es el rol para Dirección.
+ *  - vacío: una persona del equipo, que contesta el relevamiento.
+ *  - Prueba: Dirección. Puede entrar a probar el formulario, no aparece en las
+ *    listas del equipo y recibe el mail de aviso de cada envío. Sus envíos
+ *    quedan marcados como PRUEBA.
  */
-const ROLES = { TRASPASO: 'Traspaso', GERENCIA: 'Gerencia', PRUEBA: 'Prueba' };
+const ROLES = { PRUEBA: 'Prueba' };
 
 /* ================================================================== */
 /* CONTENIDO DEL CUESTIONARIO                                          */
@@ -120,16 +121,6 @@ const SECCIONES = [
   { id: 'adelante', titulo: 'Para adelante', preguntas: [
     { k: 'aprender', t: 'largo', l: '¿Qué te gustaría hacer o aprender?', ej: 'Ej.: Me gustaría aprender a liquidar expensas.' },
     { k: 'algoMas', t: 'largo', l: '¿Algo más que quieras contarnos?', ej: 'Ej.: Cualquier idea para trabajar mejor, aunque parezca chica.' }
-  ] },
-  { id: 'traspaso', rol: ROLES.TRASPASO, titulo: 'Traspaso de tus tareas', intro: 'Estas preguntas son solo para vos. Sirven para que quien tome tus tareas tenga todo lo necesario.', preguntas: [
-    { k: 'trFechas', t: 'largo', l: '¿Qué fechas y vencimientos hay que tener presentes?', ej: 'Ej.: El municipal vence el 10 de cada mes. En enero cambian las fechas y hay que revisarlas.' },
-    { k: 'trContactos', t: 'largo', l: '¿A quién hay que llamar o escribir, y para qué?', ej: 'Ej.: Para planes de pago, la oficina de atención del organismo. Atienden solo por turno web.' },
-    { k: 'trArchivos', t: 'largo', l: '¿Dónde están los archivos, planillas y carpetas que usás?', ej: 'Ej.: La planilla de vencimientos está en el Drive, carpeta Impuestos. Las boletas pagadas, en el bibliorato azul.' },
-    { k: 'trAdvertencias', t: 'largo', l: '¿Qué le advertirías a quien tome tus tareas?', ej: 'Ej.: Hay dos propiedades con la nomenclatura mal cargada. Hay que buscarlas por número de cuenta.' }
-  ] },
-  { id: 'gerencia', rol: ROLES.GERENCIA, titulo: 'Gerencia', intro: 'Estas preguntas son solo para vos.', preguntas: [
-    { k: 'gDelegar', t: 'largo', l: '¿Qué tareas delegarías si hubiera alguien capacitado para tomarlas?', ej: 'Ej.: Las rendiciones mensuales. Las hago yo porque nadie más conoce a esos clientes.' },
-    { k: 'gFalta', t: 'largo', l: '¿Qué te gustaría hacer como gerente y hoy no llegás a hacer?', ej: 'Ej.: Revisar las conciliaciones todos los meses y armar el presupuesto.' }
   ] }
 ];
 
@@ -171,11 +162,7 @@ function emailActual_() {
 }
 
 function rol_(v) {
-  const s = String(v || '').trim().toLowerCase();
-  if (s === 'traspaso') return ROLES.TRASPASO;
-  if (s === 'gerencia') return ROLES.GERENCIA;
-  if (s === 'prueba') return ROLES.PRUEBA;
-  return '';
+  return String(v || '').trim().toLowerCase() === 'prueba' ? ROLES.PRUEBA : '';
 }
 
 /** Lee la hoja Personas. */
@@ -223,7 +210,7 @@ function inicio() {
       listas: LISTAS,
       tipos: TIPOS,
       tramos: TRAMOS,
-      secciones: seccionesPara_(yo.rol),
+      secciones: SECCIONES,
       borrador: yo.enviado ? '' : leerBorrador_(email)
     };
   } catch (e) {
@@ -268,7 +255,7 @@ function enviar(json) {
     const g = (datos && datos.g) || {};
     const tareas = tareasValidas_(datos);
     const faltan = [];
-    seccionesPara_(yo.rol).forEach(function (s) {
+    SECCIONES.forEach(function (s) {
       (s.preguntas || []).forEach(function (p) { if (p.req && !respondida_(p, g)) faltan.push(p.l); });
     });
     if (!tareas.length) faltan.push('Cargar al menos una tarea');
@@ -327,10 +314,6 @@ function borrarPrueba() {
 /* ================================================================== */
 /* Preguntas, valores y limpieza                                       */
 /* ================================================================== */
-
-function seccionesPara_(rol) {
-  return SECCIONES.filter(function (s) { return !s.rol || s.rol === rol || rol === ROLES.PRUEBA; });
-}
 
 function respondida_(p, g) {
   const v = g[p.k];
@@ -427,11 +410,14 @@ function borrarFilasDe_(sh, email, col) {
 }
 
 function encabezado_(sh, titulos) {
-  const ancho = Math.max(sh.getLastColumn(), 1);
+  const ancho = Math.max(sh.getLastColumn(), titulos.length);
   const actual = sh.getLastRow() ? sh.getRange(1, 1, 1, ancho).getValues()[0] : [];
-  const igual = actual.length === titulos.length && titulos.every(function (t, i) { return actual[i] === t; });
+  // Se compara todo el ancho: si quedaron títulos viejos de más a la derecha, se limpian.
+  const fila = [];
+  for (let i = 0; i < ancho; i++) fila.push(i < titulos.length ? titulos[i] : '');
+  const igual = actual.length === ancho && fila.every(function (t, i) { return String(actual[i]) === t; });
   if (igual) return;
-  sh.getRange(1, 1, 1, titulos.length).setValues([titulos]);
+  sh.getRange(1, 1, 1, ancho).setValues([fila]);
   try { sh.getRange(1, 1, 1, titulos.length).setFontWeight('bold'); sh.setFrozenRows(1); } catch (e) {}
 }
 
@@ -517,7 +503,7 @@ function instalar() {
   }
   try {
     shP.setColumnWidth(1, 280); shP.setColumnWidth(2, 160);
-    const regla = SpreadsheetApp.newDataValidation().requireValueInList([ROLES.TRASPASO, ROLES.GERENCIA, ROLES.PRUEBA], true).setAllowInvalid(true).build();
+    const regla = SpreadsheetApp.newDataValidation().requireValueInList([ROLES.PRUEBA], true).setAllowInvalid(true).build();
     shP.getRange(2, 3, 200, 1).setDataValidation(regla);
   } catch (e) {}
 
@@ -549,8 +535,8 @@ function verificarInstalacion() {
     if (p.rol !== ROLES.PRUEBA) reales++;
   });
   Logger.log((reales ? 'OK   ' : 'OJO  ') + reales + ' persona(s) cargada(s), sin contar las de prueba');
-  const con = function (rol) { return lista.filter(function (p) { return p.rol === rol; }).map(function (p) { return p.nombre; }).join(', ') || 'nadie'; };
-  Logger.log('     Bloque de traspaso: ' + con(ROLES.TRASPASO) + ' · Bloque de gerencia: ' + con(ROLES.GERENCIA) + ' · Prueba: ' + con(ROLES.PRUEBA));
+  const prueba = lista.filter(function (p) { return p.rol === ROLES.PRUEBA; }).map(function (p) { return p.email; });
+  Logger.log('     Rol Prueba (pueden probar el formulario y reciben el aviso de cada envío): ' + (prueba.join(', ') || 'nadie'));
 
   try {
     const sh = hoja_(H.BORRADORES);
