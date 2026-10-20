@@ -81,7 +81,6 @@ const SECCIONES = [
   { id: 'puesto', titulo: 'Tu puesto', preguntas: [
     { k: 'puestoNombre', t: 'texto', req: 1, l: '¿Cómo llamarías a tu puesto?', ej: 'Ej.: Encargada de cobranzas y mora' },
     { k: 'jefe', t: 'chips', multi: 1, opts: 'equipoDir', req: 1, l: '¿Quién te da tareas en el día a día?', ayuda: 'Marcá a todas las personas que te asignan trabajo, aunque no sean tu jefe formal.' },
-    { k: 'consulta', t: 'chips', multi: 1, opts: 'equipoDir', l: 'Cuando tenés una duda, ¿a quién le preguntás?' },
     { k: 'trabajaCon', t: 'chips', multi: 1, max: 3, opts: 'equipo', l: '¿Con quiénes trabajás más?', ayuda: 'Hasta tres personas.' },
     { k: 'pedidosDe', t: 'chips', multi: 1, opts: 'fuera', excl: ['Nadie más'], l: '¿Quién más te pide cosas, por fuera de Administración?' },
     { k: 'pedidosQue', t: 'largo', l: '¿Qué te piden y cada cuánto?', ej: 'Ej.: Desde alquileres me piden el estado de cuenta de un inquilino antes de renovar. Dos o tres veces por semana.' }
@@ -94,35 +93,21 @@ const SECCIONES = [
     { k: 'publicoQuien', t: 'chips', multi: 1, opts: 'publicoQuien', l: '¿A quiénes atendés?' }
   ] },
   { id: 'esperas', titulo: 'Esperas y dependencias', preguntas: [
-    { k: 'esperasFrena', t: 'largo', l: '¿Qué trabajo tuyo se frena esperando a otra persona?', ej: 'Ej.: Los pagos quedan parados hasta que los autorizan. Suele tardar dos o tres días.' },
-    { k: 'esperasMias', t: 'largo', l: '¿Quién espera cosas tuyas para poder seguir?', ej: 'Ej.: Tesorería espera mi listado para poder pagar. Si me atraso, se atrasa el pago.' }
+    { k: 'esperasFrena', t: 'largo', l: '¿Qué parte de tu trabajo suele quedar esperando información o una respuesta de otro sector?', ej: 'Ej.: La liquidación espera las facturas de proveedores. Si llegan tarde, sale tarde.' },
+    { k: 'esperasAcceso', t: 'largo', l: '¿Qué información tenés que pedir seguido que podrías sacar vos si tuvieras acceso?', ej: 'Ej.: El estado de cuenta de un inquilino, que hoy pido a cobranzas.' }
   ] },
-  { id: 'reemplazo', titulo: 'Reemplazos', preguntas: [
-    { k: 'reempSinHacer', t: 'largo', l: 'Si faltás una semana, ¿qué queda sin hacer?', ej: 'Ej.: Los sellados no los hace nadie y se acumulan hasta que vuelvo.' },
-    { k: 'reempCubro', t: 'largo', l: '¿A quién cubrís vos cuando falta, y en qué tareas?', ej: 'Ej.: Cubro la caja cuando falta quien cobra. El resto de sus tareas no las sé hacer.' },
-    { k: 'reempUnico', t: 'largo', l: '¿Qué sabés hacer que no sabe nadie más?', ej: 'Ej.: Soy la única persona que sabe presentar el IVA en ARCA.' },
+  { id: 'proceso', titulo: 'Para aceitar el proceso', preguntas: [
+    { k: 'dobleCarga', t: 'largo', l: '¿Qué datos cargás o buscás más de una vez?', ej: 'Ej.: Cargo los mismos datos en Mirol y en un Excel.' },
+    { k: 'dolNoMia', t: 'largo', l: '¿Qué tarea sentís que no debería ser tuya?', ej: 'Ej.: Escanear los contratos. Me saca tiempo justo en la semana de cierre.' },
+    { k: 'asistente', t: 'largo', l: 'Si tuvieras un asistente que hiciera una tarea por vos, ¿cuál le darías primero?', ej: 'Ej.: Pasar los importes de las boletas a la planilla. Es siempre igual y me lleva una mañana por mes.' },
     { k: 'reempEscrito', t: 'chips', opts: 'escrito', l: '¿Está escrito en algún lado cómo se hacen tus tareas?' }
-  ] },
-  { id: 'decisiones', titulo: 'Decisiones y clientes', preguntas: [
-    { k: 'decSolo', t: 'largo', l: '¿Qué decidís por tu cuenta, sin consultar?', ej: 'Ej.: Acepto un plan de pago de hasta dos cuotas.' },
-    { k: 'decConsulto', t: 'largo', l: '¿Qué tenés que consultar antes de hacer?', ej: 'Ej.: Cualquier bonificación de intereses la tengo que consultar, y a veces la respuesta tarda.' },
-    { k: 'carteras', t: 'largo', l: '¿Hay clientes, propietarios o edificios que manejás solo vos?', ej: 'Ej.: Llevo todo lo de dos consorcios. Nadie más conoce el detalle.' }
-  ] },
-  { id: 'cambios', titulo: 'Cambios en tu puesto', preguntas: [
-    { k: 'heredadas', t: 'largo', l: '¿Qué tareas tomaste de alguien que ya no está?', ej: 'Ej.: Desde el año pasado hago la facturación mensual, que antes hacía otra persona.' },
-    { k: 'yaNo', t: 'largo', l: '¿Qué hacías antes y ya no hacés? ¿Quién lo hace ahora?', ej: 'Ej.: Antes escaneaba los contratos. Ahora lo hace recepción.' }
-  ] },
-  { id: 'tiempo', titulo: 'Lo que te hace perder tiempo', preguntas: [
-    { k: 'dolTiempo', t: 'largo', l: '¿Cuáles son las tres cosas que más tiempo te hacen perder?', ej: 'Ej.: 1) Cargo los mismos datos en Mirol y en un Excel. 2) Busco comprobantes en mails viejos. 3) Me interrumpen con consultas que no son de mi sector.' },
-    { k: 'dolErrores', t: 'largo', l: '¿Qué errores o retrabajos se repiten?', ej: 'Ej.: A veces se paga dos veces lo mismo porque no queda claro quién lo tenía.' },
-    { k: 'dolNoMia', t: 'largo', l: '¿Qué tarea sentís que no debería ser tuya?', ej: 'Ej.: Archivar los legajos. Me saca tiempo justo en la semana de cierre.' },
-    { k: 'asistente', t: 'largo', l: 'Si tuvieras un asistente que hiciera una tarea por vos, ¿cuál le darías primero?', ej: 'Ej.: Pasar los importes de las boletas a la planilla. Es siempre igual y me lleva una mañana por mes.' }
   ] },
   { id: 'adelante', titulo: 'Para adelante', preguntas: [
     { k: 'aprender', t: 'largo', l: '¿Qué te gustaría hacer o aprender?', ej: 'Ej.: Me gustaría aprender a liquidar expensas.' },
     { k: 'algoMas', t: 'largo', l: '¿Algo más que quieras contarnos?', ej: 'Ej.: Cualquier idea para trabajar mejor, aunque parezca chica.' }
   ] }
 ];
+
 
 /* ================================================================== */
 /* Límites técnicos (no hace falta tocarlos)                           */

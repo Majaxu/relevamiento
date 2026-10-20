@@ -2,10 +2,10 @@
 
 Formulario online para que cada persona de Administración describa **las tareas que hace hoy**, con sus palabras:
 cómo las hace, si son mecánicas o requieren criterio, cada cuánto, cuánto le llevan, de quién depende y quién la
-reemplaza. Suma preguntas sobre esperas, reemplazos, decisiones, carga a lo largo del mes y lo que le hace perder tiempo.
+reemplaza. Suma preguntas sobre la carga a lo largo del mes, las esperas entre sectores y qué parte del trabajo se podría automatizar.
 
-Sirve para comparar lo que dice la descripción de puestos con lo que pasa de verdad, y con eso ordenar el organigrama
-y repartir mejor la carga.
+Sirve para tener una foto actualizada de qué hace cada uno y detectar qué partes del trabajo se pueden
+resolver con herramientas o automatizaciones.
 
 Es **online y multiusuario**: corre sobre **Google Apps Script + Google Sheets**, igual que
 [Biprop](https://github.com/Majaxu/Biprop) y [Pipeline ACM](https://github.com/Majaxu/pipelineacm).
