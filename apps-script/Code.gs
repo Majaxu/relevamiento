@@ -81,26 +81,26 @@ const SECCIONES = [
   { id: 'puesto', titulo: 'Tu puesto', preguntas: [
     { k: 'puestoNombre', t: 'texto', req: 1, l: '¿Cómo llamarías a tu puesto?', ej: 'Ej.: Encargada de cobranzas y mora' },
     { k: 'jefe', t: 'chips', multi: 1, opts: 'equipoDir', req: 1, l: '¿Quién te da tareas en el día a día?', ayuda: 'Marcá a todas las personas que te asignan trabajo, aunque no sean tu jefe formal.' },
-    { k: 'trabajaCon', t: 'chips', multi: 1, max: 3, opts: 'equipo', l: '¿Con quiénes trabajás más?', ayuda: 'Hasta tres personas.' },
-    { k: 'pedidosDe', t: 'chips', multi: 1, opts: 'fuera', excl: ['Nadie más'], l: '¿Quién más te pide cosas, por fuera de Administración?' },
-    { k: 'pedidosQue', t: 'largo', l: '¿Qué te piden y cada cuánto?', ej: 'Ej.: Desde alquileres me piden el estado de cuenta de un inquilino antes de renovar. Dos o tres veces por semana.' }
+    { k: 'trabajaCon', req: 1, t: 'chips', multi: 1, max: 3, opts: 'equipo', l: '¿Con quiénes trabajás más?', ayuda: 'Hasta tres personas.' },
+    { k: 'pedidosDe', req: 1, t: 'chips', multi: 1, opts: 'fuera', excl: ['Nadie más'], l: '¿Quién más te pide cosas, por fuera de Administración?' },
+    { k: 'pedidosQue', req: 1, t: 'largo', l: '¿Qué te piden y cada cuánto?', ej: 'Ej.: Desde alquileres me piden el estado de cuenta de un inquilino antes de renovar. Dos o tres veces por semana.' }
   ] },
   { id: 'tareas', tareas: 1 },
   { id: 'mes', titulo: 'Tu mes', preguntas: [
     { k: 'tramos', t: 'tramos', req: 1, l: '¿Cómo es tu carga de trabajo a lo largo del mes?' },
-    { k: 'picos', t: 'largo', l: '¿Qué es lo que más te carga en los días pesados?', ej: 'Ej.: Del 1 al 7 se me juntan la facturación y las liquidaciones, y además es cuando más llaman.' },
-    { k: 'publicoTiempo', t: 'chips', opts: 'publicoTiempo', l: 'En un día normal, ¿cuánto tiempo se te va en atender teléfono, WhatsApp y mostrador?' },
-    { k: 'publicoQuien', t: 'chips', multi: 1, opts: 'publicoQuien', l: '¿A quiénes atendés?' }
+    { k: 'picos', req: 1, t: 'largo', l: '¿Qué es lo que más te carga en los días pesados?', ej: 'Ej.: Del 1 al 7 se me juntan la facturación y las liquidaciones, y además es cuando más llaman.' },
+    { k: 'publicoTiempo', req: 1, t: 'chips', opts: 'publicoTiempo', l: 'En un día normal, ¿cuánto tiempo se te va en atender teléfono, WhatsApp y mostrador?' },
+    { k: 'publicoQuien', req: 1, t: 'chips', multi: 1, opts: 'publicoQuien', l: '¿A quiénes atendés?' }
   ] },
   { id: 'esperas', titulo: 'Esperas y dependencias', preguntas: [
-    { k: 'esperasFrena', t: 'largo', l: '¿Qué parte de tu trabajo suele quedar esperando información o una respuesta de otro sector?', ej: 'Ej.: La liquidación espera las facturas de proveedores. Si llegan tarde, sale tarde.' },
-    { k: 'esperasAcceso', t: 'largo', l: '¿Qué información tenés que pedir seguido que podrías sacar vos si tuvieras acceso?', ej: 'Ej.: El estado de cuenta de un inquilino, que hoy pido a cobranzas.' }
+    { k: 'esperasFrena', req: 1, t: 'largo', l: '¿Qué parte de tu trabajo suele quedar esperando información o una respuesta de otro sector?', ej: 'Ej.: La liquidación espera las facturas de proveedores. Si llegan tarde, sale tarde.' },
+    { k: 'esperasAcceso', req: 1, t: 'largo', l: '¿Qué información tenés que pedir seguido que podrías sacar vos si tuvieras acceso?', ej: 'Ej.: El estado de cuenta de un inquilino, que hoy pido a cobranzas.' }
   ] },
   { id: 'proceso', titulo: 'Para aceitar el proceso', preguntas: [
-    { k: 'dobleCarga', t: 'largo', l: '¿Qué datos cargás o buscás más de una vez?', ej: 'Ej.: Cargo los mismos datos en Mirol y en un Excel.' },
-    { k: 'dolNoMia', t: 'largo', l: '¿Qué tarea sentís que no debería ser tuya?', ej: 'Ej.: Escanear los contratos. Me saca tiempo justo en la semana de cierre.' },
-    { k: 'asistente', t: 'largo', l: 'Si tuvieras un asistente que hiciera una tarea por vos, ¿cuál le darías primero?', ej: 'Ej.: Pasar los importes de las boletas a la planilla. Es siempre igual y me lleva una mañana por mes.' },
-    { k: 'reempEscrito', t: 'chips', opts: 'escrito', l: '¿Está escrito en algún lado cómo se hacen tus tareas?' }
+    { k: 'dobleCarga', req: 1, t: 'largo', l: '¿Qué datos cargás o buscás más de una vez?', ej: 'Ej.: Cargo los mismos datos en Mirol y en un Excel.' },
+    { k: 'dolNoMia', req: 1, t: 'largo', l: '¿Qué tarea sentís que no debería ser tuya?', ej: 'Ej.: Escanear los contratos. Me saca tiempo justo en la semana de cierre.' },
+    { k: 'asistente', req: 1, t: 'largo', l: 'Si tuvieras un asistente que hiciera una tarea por vos, ¿cuál le darías primero?', ej: 'Ej.: Pasar los importes de las boletas a la planilla. Es siempre igual y me lleva una mañana por mes.' },
+    { k: 'reempEscrito', req: 1, t: 'chips', opts: 'escrito', l: '¿Está escrito en algún lado cómo se hacen tus tareas?' }
   ] },
   { id: 'adelante', titulo: 'Para adelante', intro: 'Estas dos preguntas son opcionales. Si no se te ocurre nada, las podés dejar en blanco.', preguntas: [
     { k: 'aprender', t: 'largo', l: '¿Qué te gustaría hacer o aprender?', ej: 'Ej.: Me gustaría aprender a liquidar expensas.' },
@@ -245,7 +245,7 @@ function enviar(json) {
     });
     if (!tareas.length) faltan.push('Cargar al menos una tarea');
     tareas.forEach(function (t, i) {
-      if (!(t.nombre && t.como && t.tipo && t.frecuencia && t.tiempo)) faltan.push('Completar la tarea ' + (i + 1) + (t.nombre ? ' (' + t.nombre + ')' : ''));
+      if (!(t.nombre && t.como && t.tipo && t.instructivo && t.frecuencia && t.tiempo && t.necesita && t.reemplazo)) faltan.push('Completar la tarea ' + (i + 1) + (t.nombre ? ' (' + t.nombre + ')' : ''));
     });
     if (faltan.length) return { ok: false, motivo: 'Falta completar: ' + faltan.join('; ') + '.' };
 
