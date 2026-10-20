@@ -102,7 +102,7 @@ const SECCIONES = [
     { k: 'asistente', t: 'largo', l: 'Si tuvieras un asistente que hiciera una tarea por vos, ¿cuál le darías primero?', ej: 'Ej.: Pasar los importes de las boletas a la planilla. Es siempre igual y me lleva una mañana por mes.' },
     { k: 'reempEscrito', t: 'chips', opts: 'escrito', l: '¿Está escrito en algún lado cómo se hacen tus tareas?' }
   ] },
-  { id: 'adelante', titulo: 'Para adelante', preguntas: [
+  { id: 'adelante', titulo: 'Para adelante', intro: 'Estas dos preguntas son opcionales. Si no se te ocurre nada, las podés dejar en blanco.', preguntas: [
     { k: 'aprender', t: 'largo', l: '¿Qué te gustaría hacer o aprender?', ej: 'Ej.: Me gustaría aprender a liquidar expensas.' },
     { k: 'algoMas', t: 'largo', l: '¿Algo más que quieras contarnos?', ej: 'Ej.: Cualquier idea para trabajar mejor, aunque parezca chica.' }
   ] }
