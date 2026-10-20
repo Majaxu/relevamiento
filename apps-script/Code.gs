@@ -31,7 +31,7 @@ const NOMBRE_PLANILLA = 'Relevamiento Administración · Respuestas';
 const FAVICON_URL = 'https://majaxu.github.io/relevamiento/favicon-32.png';
 
 /** Personas de Dirección que aparecen como opción en "quién te da tareas". */
-const DIRECCION = ['Tomás', 'Máximo'];
+const DIRECCION = ['Pato', 'Máximo'];
 
 /** Si es true, cada envío manda un mail de aviso a quien publicó la app y a quienes tienen rol Prueba. */
 const AVISAR_POR_MAIL = true;
